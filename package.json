@@ -1,0 +1,27 @@
+{
+  "name": "team-builder",
+  "version": "1.0.0",
+  "description": "node, JEST unit test",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ken-Bains/team-builder.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ken-Bains/team-builder/issues"
+  },
+  "homepage": "https://github.com/ken-Bains/team-builder#readme",
+  "dependencies": {
+    "inquirer": "^7.0.3",
+    "jest": "^24.9.0"
+  }
+}
