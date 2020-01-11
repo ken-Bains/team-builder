@@ -1,14 +1,18 @@
 const inquirer = require("inquirer");
+const fs = require("fs");
+var allEmployeesArr = [];
 
 startInquirer();
 
 function startInquirer(typeOfEmployee){
     inquirer.prompt(questionPrompts(typeOfEmployee)).then(function(res){
+        allEmployeesArr.push(res);
         addEmployeePrompt()
     });
 }
 
 function addEmployeePrompt() {
+    
     inquirer.prompt(
         {
             type: "list",
@@ -16,11 +20,14 @@ function addEmployeePrompt() {
             name: "addOrNot",
             choices: ["yes", "no"]
         }
-    ).then(function(choices) {
-        if(choices.addOrNot === "yes") {
-            whatTypeOfEmployeePrompt();
-        }
-    })
+        ).then(function(choices) {
+            if(choices.addOrNot === "yes") {
+                whatTypeOfEmployeePrompt();
+            } else if(choices.addOrNot === "no"){
+                buildEmployee(allEmployeesArr);
+
+            }
+        })
 }
 
 function whatTypeOfEmployeePrompt() {
@@ -44,17 +51,17 @@ function questionPrompts(typeOfEmployee = "mananger") {
     var promptsArr = [
         {
             type: "Input",
-            message: `what is your ${typeOfEmployee} name?`,
+            message: `what is the ${typeOfEmployee}'s name?`,
             name: "name"
         },
         {
             type: "Input",
-            message: `what is your ${typeOfEmployee} id?`,
+            message: `what is the ${typeOfEmployee}'s id?`,
             name: "id"
         },
         {
             type: "Input",
-            message: `what is your ${typeOfEmployee} email?`,
+            message: `what is the ${typeOfEmployee}'s email?`,
             name: "email"
         },
     ];
@@ -71,7 +78,7 @@ function questionPrompts(typeOfEmployee = "mananger") {
         promptsArr.push(
             {
                 type: "Input",
-                message: `what is the github url?`,
+                message: `what is the github user name?`,
                 name: "dynamicData"
             }
         );
@@ -83,13 +90,15 @@ function questionPrompts(typeOfEmployee = "mananger") {
                 name: "dynamicData"
             }
         );
-    }
-    
-    buildEmployee(promptsArr, typeOfEmployee);
+    };
 
     return promptsArr
 }
 
-function buildEmployee(arr, typeOfEmployee) {
-
+function buildEmployee(arr) {
+    console.log(arr);
+    fs.readFile(__dirname + "/templates/engineer.html", "utf8", function(err, data){
+        if(err) throw err;
+        console.log(data, "data");
+    });
 }
