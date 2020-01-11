@@ -111,6 +111,7 @@ function buildEmployee(arr) {
         return newObj
     });
     allEmployeesArr = employeesArr;
+    console.log(allEmployeesArr, "114")
     addToHtml();
 }
 
@@ -172,8 +173,16 @@ async function generateOutputHtml() {
     <title>Team</title>
   </head>
   <body>
+  <div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1 class="display-4 text-center">My Team</h1>
+  </div>
+</div>
+<div class="container">
+  <div class="card-columns">
     ${allEmployeesHtml}
-
+</div>
+</div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
