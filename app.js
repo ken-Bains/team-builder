@@ -1,6 +1,9 @@
 const inquirer = require("inquirer");
 const fs = require("fs");
 const util = require('util');
+const Intern = require("./lib/intern");
+const Engineer = require("./lib/engineer");
+const Manager = require("./lib/manager");
 var allEmployeesArr = [];
 
 startInquirer();
@@ -98,18 +101,22 @@ function questionPrompts(typeOfEmployee = "mananger") {
 
 async function buildEmployee(arr) {
     const readFile = util.promisify(fs.readFile);
+    // const maps = util.promisify(stripe.map);
 
     let engineerHtml = await readFile(__dirname + "/templates/engineer.html", "utf8");
     let manangerHtml = await readFile(__dirname + "/templates/manager.html", "utf8");
     let internHtml = await readFile(__dirname + "/templates/intern.html", "utf8");
 
+    let employeesArr = arr.map(el => {
+        if(el.school) {
+            var newObj = new Intern(el.name, el.id, el.email, el.school)
+        } else if (el.github) {
+            var newObj = new Engineer(el.name, el.id, el.email, el.github)
+        } else {
+            var newObj = new Manager(el.name, el.id, el.email, el.office)
+        }
+        return newObj
+    });
+
     
-    // fs.readFile(__dirname + "/templates/manager.html", "utf8", function (err, data) {
-    //     if (err) throw err;
-    //     // console.log(data, "data");
-    //     manangerHtml = data;
-    // });
-
-
-
 }
