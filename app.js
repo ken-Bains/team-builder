@@ -74,7 +74,7 @@ function questionPrompts(typeOfEmployee = "mananger") {
             {
                 type: "Input",
                 message: `what is the managers office location?`,
-                name: "office"
+                name: "officeNumber"
             }
         );
     } else if (typeOfEmployee === "engineer") {
@@ -106,7 +106,7 @@ function buildEmployee(arr) {
         } else if (el.github) {
             var newObj = new Engineer(el.name, el.id, el.email, el.github)
         } else {
-            var newObj = new Manager(el.name, el.id, el.email, el.office)
+            var newObj = new Manager(el.name, el.id, el.email, el.officeNumber)
         }
         return newObj
     });
