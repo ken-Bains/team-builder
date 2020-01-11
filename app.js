@@ -1,18 +1,18 @@
 const inquirer = require("inquirer");
 const fs = require("fs");
+const util = require('util');
 var allEmployeesArr = [];
 
 startInquirer();
 
-function startInquirer(typeOfEmployee){
-    inquirer.prompt(questionPrompts(typeOfEmployee)).then(function(res){
+function startInquirer(typeOfEmployee) {
+    inquirer.prompt(questionPrompts(typeOfEmployee)).then(function (res) {
         allEmployeesArr.push(res);
         addEmployeePrompt()
     });
 }
 
 function addEmployeePrompt() {
-    
     inquirer.prompt(
         {
             type: "list",
@@ -20,14 +20,14 @@ function addEmployeePrompt() {
             name: "addOrNot",
             choices: ["yes", "no"]
         }
-        ).then(function(choices) {
-            if(choices.addOrNot === "yes") {
-                whatTypeOfEmployeePrompt();
-            } else if(choices.addOrNot === "no"){
-                buildEmployee(allEmployeesArr);
+    ).then(function (choices) {
+        if (choices.addOrNot === "yes") {
+            whatTypeOfEmployeePrompt();
+        } else if (choices.addOrNot === "no") {
+            buildEmployee(allEmployeesArr);
 
-            }
-        })
+        }
+    })
 }
 
 function whatTypeOfEmployeePrompt() {
@@ -38,8 +38,8 @@ function whatTypeOfEmployeePrompt() {
             name: "typeOfEmpoyee",
             choices: ["engineer", "intern"]
         }
-    ).then(function(choices) {
-        if(choices.typeOfEmpoyee === "engineer") {
+    ).then(function (choices) {
+        if (choices.typeOfEmpoyee === "engineer") {
             startInquirer("engineer");
         } else {
             startInquirer("intern");
@@ -65,29 +65,29 @@ function questionPrompts(typeOfEmployee = "mananger") {
             name: "email"
         },
     ];
-    
-    if(typeOfEmployee === "mananger") {
+
+    if (typeOfEmployee === "mananger") {
         promptsArr.push(
             {
                 type: "Input",
                 message: `what is the managers office location?`,
-                name: "dynamicData"
+                name: "office"
             }
         );
-    } else if(typeOfEmployee === "engineer") {
+    } else if (typeOfEmployee === "engineer") {
         promptsArr.push(
             {
                 type: "Input",
                 message: `what is the github user name?`,
-                name: "dynamicData"
+                name: "github"
             }
         );
-    } else if(typeOfEmployee === "intern") {
+    } else if (typeOfEmployee === "intern") {
         promptsArr.push(
             {
                 type: "Input",
                 message: `what school are they affilated with?`,
-                name: "dynamicData"
+                name: "school"
             }
         );
     };
@@ -95,10 +95,21 @@ function questionPrompts(typeOfEmployee = "mananger") {
     return promptsArr
 }
 
-function buildEmployee(arr) {
-    console.log(arr);
-    fs.readFile(__dirname + "/templates/engineer.html", "utf8", function(err, data){
-        if(err) throw err;
-        console.log(data, "data");
-    });
+
+async function buildEmployee(arr) {
+    const readFile = util.promisify(fs.readFile);
+
+    let engineerHtml = await readFile(__dirname + "/templates/engineer.html", "utf8");
+    let manangerHtml = await readFile(__dirname + "/templates/manager.html", "utf8");
+    let internHtml = await readFile(__dirname + "/templates/intern.html", "utf8");
+
+    
+    // fs.readFile(__dirname + "/templates/manager.html", "utf8", function (err, data) {
+    //     if (err) throw err;
+    //     // console.log(data, "data");
+    //     manangerHtml = data;
+    // });
+
+
+
 }
