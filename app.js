@@ -111,7 +111,6 @@ function buildEmployee(arr) {
         return newObj
     });
     allEmployeesArr = employeesArr;
-    console.log(allEmployeesArr, "114")
     addToHtml();
 }
 
@@ -158,7 +157,6 @@ async function addToHtml() {
 async function generateOutputHtml() {
     const readFile = util.promisify(fs.readFile);
     let allEmployeesHtml = await readFile(__dirname + "/templates/main.html", "utf8");
-    console.log(allEmployeesHtml);
     let teamHtml = `
     <!doctype html>
 <html lang="en">
